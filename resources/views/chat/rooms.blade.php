@@ -7,14 +7,16 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>Contato</th>
+                        <th>Sala</th>
+                        <th>Tópico</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($chats as $chat)
-                    <tr>
-                        <td>{{ $chat['name'] }}</td>
-                    </tr>
+                    @foreach($rooms as $room)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->topic }}</td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>

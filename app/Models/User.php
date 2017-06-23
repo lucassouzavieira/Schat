@@ -35,11 +35,12 @@ class User extends Authenticatable
 
     public function online()
     {
-        return $this->where('status', '=', 1)->get()->count();
+        return $this->where('status', '=', 1)->get();
     }
 
     public function updateStatus($status = 0)
     {
         return $this->where('id', '=', Auth::user()->id)->update(['status' => $status]);
     }
+
 }

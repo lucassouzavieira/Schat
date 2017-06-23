@@ -34,7 +34,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('home', [
-            'online' => $this->user->online(),
+            'online' => $this->user->online()->count(),
             'messages' => $this->message->all()->count(),
             'rooms' => $this->room->all()->count()
         ]);

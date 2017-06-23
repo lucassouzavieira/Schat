@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Auth;
+use DB;
 
 class Message extends Model
 {
@@ -27,6 +28,8 @@ class Message extends Model
 
     public function chats()
     {
-        return $this->where('from', '=', Auth::user()->id)->groupBy('to')->get();
+        return $this->select(DB::Raw('DISTINCT `to`'))
+            ->where('from', '=', Auth::user()->id)
+            ->get();
     }
 }

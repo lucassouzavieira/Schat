@@ -21,4 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'chat'], function (){
    Route::get('mychats', 'ChatController@index')->name('chat.index');
+   Route::get('usersonline', 'ChatController@users')->name('chat.on');
 });

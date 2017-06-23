@@ -65,7 +65,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Bem-vindo !</h1>
+            <h1>Bem-vindo, {{ Auth::user()->name }}!</h1>
         </div>
     </div>
     <div class="row">

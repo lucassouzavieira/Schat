@@ -7,14 +7,18 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>Contato</th>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Visto por último</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($chats as $chat)
-                    <tr>
-                        <td>{{ $chat['name'] }}</td>
-                    </tr>
+                    @foreach($online as $user)
+                        <tr>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->updated_at  }}</td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>

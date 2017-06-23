@@ -39,7 +39,11 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        @if(Auth::check())
+                            <li><a href="{{ route('chat.index') }}">Minhas conversas</a></li>
+                            <li><a href="{{ route('chat.on') }}">Usuários Online</a></li>
+                            <li><a href="#">Salas de Batepapo</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
