@@ -13,7 +13,20 @@ class CreateMessagesTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('messages', function (Blueprint $table){
+           $table->increments('id');
+           $table->text('content');
+
+           $table->integer('from')->unsigned();
+           $table->integer('to')->unsigned()->nullable();
+           $table->integer('room')->unsigned()->nullable();
+
+           $table->foreign('room')->references('id')->on('rooms');
+           $table->foreign('from')->references('id')->on('users');
+           $table->foreign('to')->references('id')->on('users');
+
+           $table->timestamps();
+        });
     }
 
     /**

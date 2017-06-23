@@ -1211,6 +1211,11 @@ var app = new Vue({
         addMessage: function addMessage(message) {
             console.log('message sent');
             this.messages.push(message);
+        },
+        created: function created() {
+            axios.get('/chat/messages').then(function (response) {
+                console.log(response);
+            });
         }
     }
 });

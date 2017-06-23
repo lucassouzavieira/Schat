@@ -1,9 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'status'
     ];
 
     /**
@@ -26,4 +27,19 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'from');
+    }
+
+    public function online()
+    {
+        return $this->where('status', '=', 1)->get()->count();
+    }
+
+    public function updateStatus($status = 0)
+    {
+        return $this->where('id', '=', Auth::user()->id)->update(['status' => $status]);
+    }
 }

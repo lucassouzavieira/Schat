@@ -39,6 +39,12 @@ const app = new Vue({
         addMessage(message){
               console.log('message sent');
               this.messages.push(message);
+        },
+
+        created() {
+            axios.get('/chat/messages').then(response => {
+                console.log(response);
+            });
         }
     }
 });

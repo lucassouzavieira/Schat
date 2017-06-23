@@ -13,7 +13,16 @@ class CreateRoomHasUsersTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('room_has_users', function (Blueprint $table){
+            $table->increments('id');
+            $table->integer('room')->unsigned();
+            $table->integer('user')->unsigned();
+
+            $table->foreign('room')->references('id')->on('rooms');
+            $table->foreign('user')->references('id')->on('users');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +32,6 @@ class CreateRoomHasUsersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('room_has_users');
     }
 }
