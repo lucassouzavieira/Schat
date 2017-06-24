@@ -13,7 +13,7 @@ class CreateRoomHasUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('room_has_users', function (Blueprint $table){
+        Schema::create('room_has_users', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('room')->unsigned();
             $table->integer('user')->unsigned();

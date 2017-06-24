@@ -26,7 +26,7 @@ class ChatController extends Controller
             $chats = $this->message->chats();
 
             $chatsInfo = [];
-            foreach ($chats as $chat){
+            foreach ($chats as $chat) {
                 $user = User::find($chat->to);
                 $info['name'] = $user->name;
                 $info['to'] = $chat->to;
@@ -38,13 +38,12 @@ class ChatController extends Controller
                 'chats' => $chatsInfo
             ]);
         } catch (\Exception $exception) {
-            if(env('APP_DEBUG')){
+            if (env('APP_DEBUG')) {
                 throw $exception;
             }
 
             return redirect()->route('home');
         }
-
     }
 
     public function users()
@@ -56,7 +55,7 @@ class ChatController extends Controller
 
     public function dialog($with)
     {
-        if($with == Auth::user()->id){
+        if ($with == Auth::user()->id) {
             return redirect()->route('chat.index');
         }
 

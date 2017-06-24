@@ -9,7 +9,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class UpdateUserOnline
 {
-
     protected $user;
     /**
      * Create the event listener.

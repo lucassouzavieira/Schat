@@ -79,12 +79,7 @@
 
         @yield('content')
     </div>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/echo.js') }}"></script>
-    <script src="{{ asset('js/pusher.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
     @yield('script')
 </body>
 </html>

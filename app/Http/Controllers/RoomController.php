@@ -30,13 +30,13 @@ class RoomController extends Controller
 
     public function store(Request $request)
     {
-        try{
+        try {
             $room = new Room();
             $room->fill($request->except(['_token', '_method']));
             $room->save();
             return redirect()->route('room.index');
-        } catch (\Exception $e){
-            if(env('APP_DEBUG')){
+        } catch (\Exception $e) {
+            if (env('APP_DEBUG')) {
                 throw $e;
             }
 

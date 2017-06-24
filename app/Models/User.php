@@ -42,5 +42,4 @@ class User extends Authenticatable
     {
         return $this->where('id', '=', Auth::user()->id)->update(['status' => $status]);
     }
-
 }

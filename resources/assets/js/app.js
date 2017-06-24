@@ -14,37 +14,3 @@ window.Vue = require('vue');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-Vue.component('example', require('./components/Example.vue'));
-Vue.component('chat-message', require('./components/ChatMessage.vue'));
-Vue.component('chat-log', require('./components/ChatLog.vue'));
-Vue.component('chat-composer', require('./components/ChatComposer.vue'));
-
-const app = new Vue({
-    el: '#app',
-
-    data: {
-        messages: [
-            {
-                message: "Hello",
-                user: "Jhon Doe"
-            },
-            {
-                message: "Hi",
-                user: "Maltus Doe"
-            }
-        ]
-    },
-    methods: {
-        addMessage(message){
-              console.log('message sent');
-              this.messages.push(message);
-        },
-
-        created() {
-            axios.get('/chat/messages').then(response => {
-                console.log(response);
-            });
-        }
-    }
-});

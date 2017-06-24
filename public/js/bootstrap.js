@@ -1,7 +1,5 @@
 
-var echo = new Echo();
-
-window.Echo = echo({
+window.Echo = Echo({
     broadcaster: 'pusher',
     key: '72777654e97cddb90c39',
     cluster: 'us2',
