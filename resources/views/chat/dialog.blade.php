@@ -108,51 +108,60 @@
 
 @section('script')
     <script type="text/javascript">
+
+    function keydownMessage(event){
+      if(event.which === 13){
+        if($(this).val() !== ''){
+          sendMessage();
+        }
+      }
+    }
+
+    function sendMessage(){
+      let message;
+      message = $('#message').val();
+
+      let from;
+      from = parseInt("{{ Auth::user()->id }}");
+
+      let to;
+      to = parseInt("{{ $with->id }}");
+
+      if(message.length === 0){
+         return;
+      }
+
+       $.ajax({
+           type: "POST",
+           url: "{{ route('message.post') }}",
+           data: {
+               _token: "{{ csrf_token() }}",
+               content: message,
+               from: from,
+               to: to,
+           },
+           success: function (e) {
+               var content = '<li class="media"><div class="media-body"><div class="media">';
+               content += '<div class="media-body text-right">';
+               content += e.content;
+               content += '<br>';
+               content += '<small class="text-muted">' + "{{ Auth::user()->name }}" + '</small>';
+               content += '<hr>';
+               content += '</div></div></div></li>';
+
+               $('#message').val('');
+               $('#dialog-area').append(content);
+           },
+           error: function (e) {
+               console.log(e);
+           }
+       });
+     }
+
         // Envio de mensagens
         $(document).ready(function () {
-
-            $('#send').on('click', function () {
-                let message;
-                message = $('#message').val();
-
-                let from;
-                from = parseInt("{{ Auth::user()->id }}");
-
-                let to;
-                to = parseInt("{{ $with->id }}");
-
-               if(message.length === 0){
-                   return;
-               }
-
-               $.ajax({
-                   type: "POST",
-                   url: "{{ route('message.post') }}",
-                   data: {
-                       _token: "{{ csrf_token() }}",
-                       content: message,
-                       from: from,
-                       to: to,
-                   },
-                   success: function (e) {
-                       var content = '<li class="media"><div class="media-body"><div class="media">';
-                       content += '<div class="media-body text-right">';
-                       content += e.content;
-                       content += '<br>';
-                       content += '<small class="text-muted">' + "{{ Auth::user()->name }}" + '</small>';
-                       content += '<hr>';
-                       content += '</div></div></div></li>';
-
-                       $('#message').value = '';
-
-                       $('#dialog-area').append(content);
-                   },
-                   error: function (e) {
-                       console.log(e);
-                   }
-               })
-
-            });
+            $('#message').keydown(keydownMessage);
+            $('#send').on('click', sendMessage);
         });
 
         // Recebimento
