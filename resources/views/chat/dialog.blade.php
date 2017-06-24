@@ -2,9 +2,18 @@
 
 @section('style')
     <style type="text/css">
-        .blue { background: blue }
-        .grey { background: grey }
-        .chats-row { height: 100vh; }
+        .blue {
+            background: blue
+        }
+
+        .grey {
+            background: grey
+        }
+
+        .chats-row {
+            height: 100vh;
+        }
+
         .chats-row div {
             height: 50%;
             border: 1px solid #ddd;
@@ -17,12 +26,12 @@
             border-bottom: 1px solid #ddd;
 
         }
+
         .list-group-item:first-child {
             border-top: none;
             border-top-left-radius: 0px;
             border-top-right-radius: 0px;
         }
-
 
         .current-chat {
             height: 100vh;
@@ -71,18 +80,18 @@
             <div class="col-md-12">
                 <ul class="media-list" id="dialog-area">
                     @foreach($messages as $message)
-                            <li class="media">
-                                <div class="media-body">
-                                    <div class="media">
-                                        <div class="media-body @if($message->from == Auth::user()->id) text-right @endif">
-                                            {{ $message->content }}
-                                            <br>
-                                            <small class="text-muted">{{ $message->username() }}</small>
-                                            <hr>
-                                        </div>
+                        <li class="media">
+                            <div class="media-body">
+                                <div class="media">
+                                    <div class="media-body @if($message->from == Auth::user()->id) text-right @endif">
+                                        {{ $message->content }}
+                                        <br>
+                                        <small class="text-muted">{{ $message->username() }}</small>
+                                        <hr>
                                     </div>
                                 </div>
-                            </li>
+                            </div>
+                        </li>
                     @endforeach
                 </ul>
             </div>
@@ -92,7 +101,8 @@
                 <div class="row">
                     <div class="col-md-12" style="margin-top: 0.5%;">
                         <div class="input-group">
-                            <input type="text" id="message" class="form-control" placeholder="Digite uma mensagem" aria-describedby="sizing-addon3">
+                            <input type="text" id="message" class="form-control" placeholder="Digite uma mensagem"
+                                   aria-describedby="sizing-addon3">
                             <span class="input-group-btn">
                                 <button class="btn btn-primary" type="button" id="send">
                                     <i class="glyphicon glyphicon-send"></i>
@@ -109,54 +119,54 @@
 @section('script')
     <script type="text/javascript">
 
-    function keydownMessage(event){
-      if(event.which === 13){
-        if($(this).val() !== ''){
-          sendMessage();
+        function keydownMessage(event) {
+            if (event.which === 13) {
+                if ($(this).val() !== '') {
+                    sendMessage();
+                }
+            }
         }
-      }
-    }
 
-    function sendMessage(){
-      let message;
-      message = $('#message').val();
+        function sendMessage() {
+            let message;
+            message = $('#message').val();
 
-      let from;
-      from = parseInt("{{ Auth::user()->id }}");
+            let from;
+            from = parseInt("{{ Auth::user()->id }}");
 
-      let to;
-      to = parseInt("{{ $with->id }}");
+            let to;
+            to = parseInt("{{ $with->id }}");
 
-      if(message.length === 0){
-         return;
-      }
+            if (message.length === 0) {
+                return;
+            }
 
-       $.ajax({
-           type: "POST",
-           url: "{{ route('message.post') }}",
-           data: {
-               _token: "{{ csrf_token() }}",
-               content: message,
-               from: from,
-               to: to,
-           },
-           success: function (e) {
-               var content = '<li class="media"><div class="media-body"><div class="media">';
-               content += '<div class="media-body text-right">';
-               content += e.content;
-               content += '<br>';
-               content += '<small class="text-muted">' + "{{ Auth::user()->name }}" + '</small>';
-               content += '<hr>';
-               content += '</div></div></div></li>';
+            $.ajax({
+                type: "POST",
+                url: "{{ route('message.post') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    content: message,
+                    from: from,
+                    to: to,
+                },
+                success: function (e) {
+                    var content = '<li class="media"><div class="media-body"><div class="media">';
+                    content += '<div class="media-body text-right">';
+                    content += e.content;
+                    content += '<br>';
+                    content += '<small class="text-muted">' + "{{ Auth::user()->name }}" + '</small>';
+                    content += '<hr>';
+                    content += '</div></div></div></li>';
 
-               $('#message').val('');
-               $('#dialog-area').append(content);
-           },
-           error: function (e) {
-               console.log(e);
-           }
-       });
-     }
+                    $('#message').val('');
+                    $('#dialog-area').append(content);
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
 
         // Envio de mensagens
         $(document).ready(function () {
@@ -177,6 +187,5 @@
 
                 $('#dialog-area').append(content);
             });
-
     </script>
 @endsection

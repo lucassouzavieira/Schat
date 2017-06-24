@@ -19,6 +19,10 @@ class EventServiceProvider extends ServiceProvider
 
         'App\Events\MessageReceived' => [
 
+        ],
+
+        'App\Events\JoinRoom' => [
+            'App\Listeners\Room',
         ]
     ];
 

@@ -29,7 +29,8 @@ Route::group(['prefix' => 'room'], function (){
    Route::get('/', 'RoomController@index')->name('room.index');
    Route::get('/new', 'RoomController@create')->name('room.create');
    Route::post('/new', 'RoomController@store')->name('room.store');
-   Route::post('/join', 'RoomController@store')->name('room.join');
+   Route::get('/join/{id}', 'RoomController@join')->name('room.join');
+   Route::get('dialog/{id}', 'ChatController@dialog')->name('room.dialog');
 });
 
 Route::post('/send', 'MessageController@store')->name('message.post');
