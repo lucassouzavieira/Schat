@@ -158,7 +158,15 @@
         // Recebimento
         Echo.private('message.{{ Auth::user()->id }}')
             .listen('MessageReceived', (e) => {
-                console.log(e);
+                var content = '<li class="media"><div class="media-body"><div class="media">';
+                content += '<div class="media-body">';
+                content += e.message.content;
+                content += '<br>';
+                content += '<small class="text-muted">' + e.message.user + '</small>';
+                content += '<hr>';
+                content += '</div></div></div></li>';
+
+                $('#dialog-area').append(content);
             });
 
     </script>

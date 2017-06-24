@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -14,11 +15,14 @@ class MessageReceived implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $message;
+    public $message;
 
     public function __construct(array $message)
     {
         $this->message = $message;
+
+        $user = User::find($message['from']);
+        $this->message['user'] = $user->name;
     }
 
     /**
