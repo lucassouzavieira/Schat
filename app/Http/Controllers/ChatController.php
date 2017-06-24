@@ -59,6 +59,9 @@ class ChatController extends Controller
             return redirect()->route('chat.index');
         }
 
-        return $with;
+        return view('chat.dialog', [
+            'messages' => $this->message->beetween($with),
+            'with' => User::find($with)
+        ]);
     }
 }

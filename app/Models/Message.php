@@ -19,16 +19,35 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function username()
+    {
+        if($this->from == Auth::user()->id){
+            return "Eu";
+        }
+
+        $user = User::find($this->from);
+        return $user->name;
+    }
+
     public function beetween($user)
     {
         return $this->where('from', '=', Auth::user()->id)
             ->where('to', '=', $user)
+            ->orWhere('from', '=', $user)
+            ->where('to', '=', Auth::user()->id)
             ->get();
+    }
+
+    public function room($id)
+    {
+        return $this->where('room', '=', $id)->get();
     }
 
     public function userMessages()
     {
-        return $this->where('from', '=', Auth::user()->id)->get();
+        return $this->where('from', '=', Auth::user()->id)
+            ->orWhere('to', '=', Auth::user()->id)
+            ->get();
     }
 
     public function chats()

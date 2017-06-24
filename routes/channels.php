@@ -18,3 +18,11 @@ Broadcast::channel('App.User.{id}', function ($user) {
 Broadcast::channel('users.online', function ($user) {
     return true;
 });
+
+Broadcast::channel('message.{id}', function ($user){
+    if($user == Auth::user()->id){
+        return true;
+    }
+
+    return false;
+});
