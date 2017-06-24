@@ -21,7 +21,7 @@ class Message extends Model
 
     public function username()
     {
-        if($this->from == Auth::user()->id){
+        if ($this->from == Auth::user()->id) {
             return "Eu";
         }
 

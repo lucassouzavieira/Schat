@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Auth;
+use DB;
 
 class User extends Authenticatable
 {
@@ -41,5 +42,12 @@ class User extends Authenticatable
     public function updateStatus($status = 0)
     {
         return $this->where('id', '=', Auth::user()->id)->update(['status' => $status]);
+    }
+
+    public function rooms()
+    {
+        return DB::table('room_has_users')
+            ->where('user', '=', Auth::user()->id)
+            ->pluck('user');
     }
 }
