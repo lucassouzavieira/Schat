@@ -22,4 +22,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['prefix' => 'chat'], function (){
    Route::get('mychats', 'ChatController@index')->name('chat.index');
    Route::get('usersonline', 'ChatController@users')->name('chat.on');
+   Route::get('dialog/{id}', 'ChatController@dialog')->name('chat.dialog');
+});
+
+Route::group(['prefix' => 'room'], function (){
+   Route::get('/', 'RoomController@index')->name('room.index');
+   Route::get('/new', 'RoomController@create')->name('room.create');
+   Route::post('/new', 'RoomController@store')->name('room.store');
+   Route::post('/join', 'RoomController@store')->name('room.join');
 });

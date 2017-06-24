@@ -13,7 +13,7 @@
                     <tbody>
                     @foreach($chats as $chat)
                     <tr>
-                        <td>{{ $chat['name'] }}</td>
+                        <td><a href="{{ route('chat.dialog', ['id' => $chat['to']]) }}">{{ $chat['name'] }}</a></td>
                     </tr>
                     @endforeach
                     </tbody>
@@ -21,4 +21,13 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script type="text/javascript">
+        window.Echo.private(`users.online`)
+            .listen('UserOnline', (e) => {
+                console.log(e.update);
+            });
+    </script>
 @endsection

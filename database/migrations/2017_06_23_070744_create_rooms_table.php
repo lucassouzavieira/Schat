@@ -17,6 +17,7 @@ class CreateRoomsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('topic');
+            $table->integer('users')->unsigned();
 
             $table->timestamps();
         });

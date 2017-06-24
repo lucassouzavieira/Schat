@@ -26,6 +26,11 @@ class Message extends Model
             ->get();
     }
 
+    public function userMessages()
+    {
+        return $this->where('from', '=', Auth::user()->id)->get();
+    }
+
     public function chats()
     {
         return $this->select(DB::Raw('DISTINCT `to`'))

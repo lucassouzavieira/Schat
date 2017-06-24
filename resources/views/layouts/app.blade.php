@@ -42,7 +42,7 @@
                         @if(Auth::check())
                             <li><a href="{{ route('chat.index') }}">Minhas conversas</a></li>
                             <li><a href="{{ route('chat.on') }}">Usuários Online</a></li>
-                            <li><a href="#">Salas de Batepapo</a></li>
+                            <li><a href="{{ route('room.index') }}">Salas de Bate-papo</a></li>
                         @endif
                     </ul>
 
@@ -57,7 +57,6 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="{{ route('logout') }}"
@@ -82,6 +81,10 @@
     </div>
 
     <!-- Scripts -->
+    <script src="{{ asset('js/echo.js') }}"></script>
+    <script src="{{ asset('js/pusher.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    @yield('script')
 </body>
 </html>

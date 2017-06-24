@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserOnline;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -63,7 +64,7 @@ class LoginController extends Controller
         }
 
         if ($this->attemptLogin($request)) {
-            $this->user->updateStatus(1);
+            event(new UserOnline(Auth::user()->id));
             return $this->sendLoginResponse($request);
         }
 

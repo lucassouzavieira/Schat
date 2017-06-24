@@ -11,6 +11,10 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+Broadcast::channel('App.User.{id}', function ($user) {
+    return (boolean) App\Models\User::find($user)->status;
+});
+
+Broadcast::channel('users.online', function ($user) {
+    return true;
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserOnline;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class ChatController extends Controller
             foreach ($chats as $chat){
                 $user = User::find($chat->to);
                 $info['name'] = $user->name;
+                $info['to'] = $chat->to;
                 $chatsInfo[] = $info;
             }
 
@@ -50,5 +52,14 @@ class ChatController extends Controller
         return view('chat.users', [
             'online' => $this->user->online()
         ]);
+    }
+
+    public function dialog($with)
+    {
+        if($with == Auth::user()->id){
+            return redirect()->route('chat.index');
+        }
+
+        return $with;
     }
 }

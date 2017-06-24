@@ -1,6 +1,7 @@
-import Echo from "laravel-echo"
 
-window.Echo = new Echo({
+var echo = new Echo();
+
+window.Echo = echo({
     broadcaster: 'pusher',
     key: '72777654e97cddb90c39',
     cluster: 'us2',
@@ -53,7 +54,7 @@ if (token) {
 
 // import Echo from 'laravel-echo'
 
-// window.Pusher = require('pusher-js');
+window.Pusher = require('pusher');
 
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',

@@ -35,7 +35,7 @@ class HomeController extends Controller
     {
         return view('home', [
             'online' => $this->user->online()->count(),
-            'messages' => $this->message->all()->count(),
+            'messages' => $this->message->userMessages()->count(),
             'rooms' => $this->room->all()->count()
         ]);
     }

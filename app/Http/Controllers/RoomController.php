@@ -2,39 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    protected $room;
+
+    public function __construct()
+    {
+        $this->room = new Room();
+    }
+
     public function index()
     {
-        //
+        $rooms = Room::all();
+
+        return view('room.index', [
+            'rooms' => $rooms
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('room.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        try{
+            $room = new Room();
+            $room->fill($request->except(['_token', '_method']));
+            $room->save();
+            return redirect()->route('room.index');
+        } catch (\Exception $e){
+            if(env('APP_DEBUG')){
+                throw $e;
+            }
+
+            return redirect()->route('room.index');
+        }
     }
 
     /**
