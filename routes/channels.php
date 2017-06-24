@@ -38,3 +38,8 @@ Broadcast::channel('message.{id}', function ($id){
 //
     return true;
 });
+
+
+Broadcast::channel('room.{id}', function ($user){
+   return Auth::user()->status;
+});

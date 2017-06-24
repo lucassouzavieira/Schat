@@ -16,16 +16,14 @@ class MessageController extends Controller
 
     public function store(MessageRequest $request)
     {
-        try{
-
+        try {
             $message = new Message();
             $message->fill($request->except('_token', '_method'));
             $message->save();
             event(new MessageReceived($message->toArray()));
             return new JsonResponse($message->toArray(), JsonResponse::HTTP_OK);
-
-        } catch (\Exception $exception){
-            if(env('APP_DEBUG')){
+        } catch (\Exception $exception) {
+            if (env('APP_DEBUG')) {
                 throw $exception;
             }
 
