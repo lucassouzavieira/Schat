@@ -16,6 +16,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\UserOnline' => [
             'App\Listeners\UpdateUserOnline',
         ],
+
+        'App\Events\MessageReceived' => [
+
+        ]
     ];
 
     /**

@@ -69,7 +69,7 @@
         </div>
         <div class="row current-chat-area">
             <div class="col-md-12">
-                <ul class="media-list dialog-area">
+                <ul class="media-list" id="dialog-area">
                     @foreach($messages as $message)
                             <li class="media">
                                 <div class="media-body">
@@ -92,9 +92,9 @@
                 <div class="row">
                     <div class="col-md-12" style="margin-top: 0.5%;">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Digite uma mensagem" aria-describedby="sizing-addon3">
+                            <input type="text" id="message" class="form-control" placeholder="Digite uma mensagem" aria-describedby="sizing-addon3">
                             <span class="input-group-btn">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary" type="button" id="send">
                                     <i class="glyphicon glyphicon-send"></i>
                                 </button>
                             </span>
@@ -108,8 +108,58 @@
 
 @section('script')
     <script type="text/javascript">
+        // Envio de mensagens
         $(document).ready(function () {
-            console.log('PUTA QUE PARIU, JQUERY REPORTING');
+
+            $('#send').on('click', function () {
+                let message;
+                message = $('#message').val();
+
+                let from;
+                from = parseInt("{{ Auth::user()->id }}");
+
+                let to;
+                to = parseInt("{{ $with->id }}");
+
+               if(message.length === 0){
+                   return;
+               }
+
+               $.ajax({
+                   type: "POST",
+                   url: "{{ route('message.post') }}",
+                   data: {
+                       _token: "{{ csrf_token() }}",
+                       content: message,
+                       from: from,
+                       to: to,
+                   },
+                   success: function (e) {
+                       var content = '<li class="media"><div class="media-body"><div class="media">';
+                       content += '<div class="media-body text-right">';
+                       content += e.content;
+                       content += '<br>';
+                       content += '<small class="text-muted">' + "{{ Auth::user()->name }}" + '</small>';
+                       content += '<hr>';
+                       content += '</div></div></div></li>';
+
+                       $('#message').value = '';
+
+                       $('#dialog-area').append(content);
+                   },
+                   error: function (e) {
+                       console.log(e);
+                   }
+               })
+
+            });
         });
+
+        // Recebimento
+        Echo.channel('message.{{ Auth::user()->id }}')
+            .listen('MessageReceveid', (e) => {
+                console.log(e);
+            });
+
     </script>
 @endsection

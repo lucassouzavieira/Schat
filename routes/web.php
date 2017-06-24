@@ -31,3 +31,5 @@ Route::group(['prefix' => 'room'], function (){
    Route::post('/new', 'RoomController@store')->name('room.store');
    Route::post('/join', 'RoomController@store')->name('room.join');
 });
+
+Route::post('/send', 'MessageController@store')->name('message.post');

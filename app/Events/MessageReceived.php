@@ -23,14 +23,14 @@ class MessageReceived implements ShouldBroadcast
 
     /**
      * Define quem pode ouvir os eventos de mensagem
-     * @return PrivateChannel
+     * @return Channel
      */
     public function broadcastOn()
     {
-        if ($this->message['room']) {
-            return new PrivateChannel('message' . $this->message['room']);
+        if (array_key_exists('room', $this->message) && $this->message['room']){
+            return new PrivateChannel('message.' . $this->message['room']);
         }
 
-        return new PrivateChannel('message' . $this->message['to']);
+        return new PrivateChannel('message.' . $this->message['to']);
     }
 }
