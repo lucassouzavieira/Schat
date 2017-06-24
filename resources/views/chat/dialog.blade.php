@@ -156,8 +156,8 @@
         });
 
         // Recebimento
-        Echo.channel('message.{{ Auth::user()->id }}')
-            .listen('MessageReceveid', (e) => {
+        Echo.private('message.{{ Auth::user()->id }}')
+            .listen('MessageReceived', (e) => {
                 console.log(e);
             });
 
