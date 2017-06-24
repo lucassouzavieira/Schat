@@ -19,13 +19,13 @@ Broadcast::channel('users.online', function ($user) {
     return true;
 });
 
-Broadcast::channel('message.{id}', function ($user, $id){
+Broadcast::channel('message.{id}', function ($user, $id) {
     // Se for minha mensagem ou enderecada para mim
-    if($user->id == Auth::user()->id){
+    if ($user->id == Auth::user()->id) {
         return true;
     }
 
-    if($message->to == Auth::user()->id){
+    if ($message->to == Auth::user()->id) {
         return true;
     }
 
@@ -33,6 +33,6 @@ Broadcast::channel('message.{id}', function ($user, $id){
 });
 
 
-Broadcast::channel('room.{id}', function ($user){
-   return Auth::user()->status;
+Broadcast::channel('room.{id}', function ($user) {
+    return true;
 });

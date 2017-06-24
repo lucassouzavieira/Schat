@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\JoinRoom;
+use App\Models\Message;
 use App\Models\Room;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
     protected $room;
+    protected $message;
 
     public function __construct()
     {
         $this->room = new Room();
+        $this->message = new Message();
     }
 
     public function index()
@@ -44,8 +48,19 @@ class RoomController extends Controller
         }
     }
 
-    public function show($id)
+    public function join($id)
     {
+        event(new JoinRoom($id));
+        return redirect()->route('room.dialog', ['id' => $id]);
+    }
 
+
+    public function dialog($id)
+    {
+        $room = Room::find($id);
+        return view('room.dialog', [
+            'room' => $room,
+            'messages' => $this->message->room($id)
+        ]);
     }
 }
