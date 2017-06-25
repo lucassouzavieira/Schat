@@ -32,7 +32,7 @@ class MessageReceived implements ShouldBroadcast
     public function broadcastOn()
     {
         if (array_key_exists('room', $this->message) && $this->message['room']) {
-            return new PrivateChannel('message.' . $this->message['room']);
+            return new PrivateChannel('room.' . $this->message['room']);
         }
 
         return new PrivateChannel('message.' . $this->message['to']);

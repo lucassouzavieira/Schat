@@ -147,16 +147,7 @@
                     room: room
                 },
                 success: function (e) {
-                    var content = '<li class="media"><div class="media-body"><div class="media">';
-                    content += '<div class="media-body text-right">';
-                    content += e.content;
-                    content += '<br>';
-                    content += '<small class="text-muted">' + "{{ Auth::user()->name }}" + '</small>';
-                    content += '<hr>';
-                    content += '</div></div></div></li>';
-
                     $('#message').val('');
-                    $('#dialog-area').append(content);
                 },
                 error: function (e) {
                     console.log(e);
@@ -171,9 +162,26 @@
         });
 
         // Recebimento
-        Echo.private('message.{{ Auth::user()->id }}')
+        Echo.private('room.{{ $room->id }}')
             .listen('MessageReceived', (e) => {
-                var content = '<li class="media"><div class="media-body"><div class="media">';
+                console.log(e.message);
+
+                var content = '';
+
+                if(parseInt(e.message.from) === parseInt('{{ Auth::user()->id }}')) {
+                    content = '<li class="media"><div class="media-body"><div class="media">';
+                    content += '<div class="media-body text-right">';
+                    content += e.message.content;
+                    content += '<br>';
+                    content += '<small class="text-muted">' + "Eu" + '</small>';
+                    content += '<hr>';
+                    content += '</div></div></div></li>';
+
+                    $('#dialog-area').append(content);
+                    return;
+                }
+
+                content = '<li class="media"><div class="media-body"><div class="media">';
                 content += '<div class="media-body">';
                 content += e.message.content;
                 content += '<br>';
